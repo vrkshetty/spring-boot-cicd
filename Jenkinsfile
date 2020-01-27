@@ -37,7 +37,7 @@ pipeline {
          }
             }
             steps {withAWS(credentials: 'aws-credentials', region: 'eu-central-1') {
-            s3Download bucket: 'neo-airlines-artifact', file: 'demo-${version}.txt' path: 'demo-${version}.txt'
+            s3Download bucket: 'neo-airlines-artifact', file: 'demo-${version}.txt', path: 'demo-${version}.txt'
             }
             }
             steps {
