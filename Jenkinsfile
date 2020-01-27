@@ -7,8 +7,7 @@ pipeline {
         stage('Build') {
             agent any
             steps {withAWS(credentials: 'aws-credentials', region: 'eu-central-1'){
-            sh "chmod +x gradlew"
-            sh "./gradlew -Pversion=test build"
+
             sh "echo ${aws-credentials}"
 
             }
