@@ -1,12 +1,10 @@
-def version = "${env.BUILD_NUMBER}"
-
-node {
-    stage('Checkout') {
-        scm checkout
+pipeline {
+    agent any
+    stages {
+        stage('build') {
+            steps {
+                echo "Hello World!"
+            }
+        }
     }
-
-
-    stage 'Build'
-    sh "./gradlew -Pversion=${version} build"
-
 }
