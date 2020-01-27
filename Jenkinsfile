@@ -9,6 +9,10 @@ pipeline {
             steps {
             sh "chmod +x gradlew"
             sh "./gradlew -Pversion=test build"
+
+            }
+            steps withAWS(credentials: 'aws-credentials', region: 'eu-central-1'){
+            s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'demo-${version}.txt'
             }
 
         }
@@ -29,6 +33,9 @@ pipeline {
             tty: true
          """
          }
+            }
+            steps withAWS(credentials: 'aws-credentials', region: 'eu-central-1'){
+            s3Download bucket: 'neo-airlines-artifact', file: 'demo-${version}.txt' path: 'demo-${version}.txt'
             }
             steps {
               sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=http://nexus-sonatype-nexus.tools.svc.cluster.local:8080/myorg/myimage'
