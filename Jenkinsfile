@@ -7,8 +7,6 @@ pipeline {
         stage('Build') {
             agent any
             steps {withAWS(credentials: 'aws-credentials', region: 'eu-central-1'){
-
-            sh "echo ${aws-credentials}"
             sh 'echo "hello VS">hello.txt'
             s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'hello.txt'
 
