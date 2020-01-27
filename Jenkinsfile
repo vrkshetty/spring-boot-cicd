@@ -32,7 +32,7 @@ pipeline {
          }
             }
             steps {
-              sh 'wget -O app.jar http://nexus-sonatype-nexus.tools.svc.cluster.local:8080/repository/maven-releases/com/example/demo/test/demo-${version}.jar'
+              sh 'wget -O app.jar http://nexus-sonatype-nexus.tools.svc.cluster.local/repository/maven-releases/com/example/demo/test/demo-${version}.jar'
               sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=http://nexus-sonatype-nexus.tools.svc.cluster.local:8080/myorg/myimage'
             }
         }
