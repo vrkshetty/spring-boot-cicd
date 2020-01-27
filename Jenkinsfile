@@ -1,4 +1,13 @@
+pipeline {
+agent any {
+stage('build') {
+    steps {
+        sh "chmod +x gradlew"
+        sh "./gradlew -Pversion=test build"
 
+    }
+}
+}
 
 pipeline {
 agent {
@@ -20,12 +29,7 @@ spec:
  }
 
     stages {
-    stage('build') {
-        steps {
-            sh "chmod +x gradlew"
-            sh "./gradlew -Pversion=test build"
 
-        }
 
     }
 
