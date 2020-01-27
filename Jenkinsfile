@@ -15,23 +15,19 @@ spec:
    command:
    - /busybox/cat
    tty: true
-   volumeMounts:
-     - name: jenkins-docker-cfg
-       mountPath: /kaniko/.docker
- volumes:
- - name: jenkins-docker-cfg
-   projected:
-     sources:
-     - secret:
-         name: regcred
-         items:
-           - key: .dockerconfigjson
-             path: config.json
 """
    }
  }
 
     stages {
+    stage('build') {
+        steps {
+            sh "chmod +x gradlew"
+            sh "./gradlew -Pversion=test build"
+
+        }
+
+    }
 
         stage ('Docker-build'){
         steps('Build with Kaniko') {
