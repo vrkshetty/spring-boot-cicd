@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh "./gradlew -Pversion=${version} build"
+                sh "./gradlew -Pversion=test build"
             }
         }
     }
