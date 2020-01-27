@@ -11,12 +11,16 @@ pipeline {
             sh "./gradlew -Pversion=test build"
 
             }
+
+            }
+
+
+        stage ('Publish'){
             steps {withAWS(credentials: 'aws-credentials', region: 'eu-central-1')
             {
             s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'demo-${version}.txt'
             }
-            }
-
+        }
         }
         stage('build & push') {
             agent {
