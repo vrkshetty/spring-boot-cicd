@@ -1,5 +1,5 @@
 pipeline {
-agent  {
+agent   {
 stage('build') {
     steps {
         sh "chmod +x gradlew"
