@@ -32,7 +32,14 @@ spec:
  }
 
     stages {
+        stage('build') {
+            steps {
+                sh "chmod +x gradlew"
+                sh "./gradlew -Pversion=test build"
 
+            }
+
+        }
         stage ('Docker-build'){
         steps('Build with Kaniko') {
                 sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=http://nexus-sonatype-nexus.tools.svc.cluster.local:8080/myorg/myimage'
