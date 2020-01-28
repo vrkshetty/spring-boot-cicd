@@ -1,6 +1,7 @@
 pipeline {
     environment {
       version = "${env.BUILD_NUMBER}"
+      filename = app-${env.BUILD_NUMBER}.jar
 
     }
     agent any
@@ -11,7 +12,7 @@ pipeline {
           withAWS(credentials: 'aws-credentials', region: 'eu-central-1') {
               sh "chmod +x gradlew"
               sh "./gradlew -Pversion=test build"
-              s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'app.jar', path: 'app-"${version}".jar'
+              s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'app.jar', path: 'app.jar'
               sh 'ls -ltr'
           }
       }
