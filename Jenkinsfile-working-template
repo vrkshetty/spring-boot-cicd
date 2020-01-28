@@ -1,0 +1,25 @@
+pipeline {
+    environment {
+      version = "${env.BUILD_NUMBER}"
+
+    }
+    agent any
+    stages {
+      stage ('build & publish'){
+      steps {
+          withAWS(credentials: 'aws-credentials', region: 'eu-central-1') {
+              sh 'echo "hello build ${version}">hello.txt'
+              s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'hello.txt'
+              sh 'ls -ltr'
+          }
+      }
+
+      }
+      stage ('Docker build'){
+      steps{
+      sh 'echo "stage 2 step 1"'
+      }
+      }
+    }
+
+}
