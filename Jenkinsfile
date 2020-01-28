@@ -13,7 +13,7 @@ pipeline {
               sh "chmod +x gradlew"
               sh "./gradlew -Pversion=test build"
               sh "ls -ltr"
-              s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'app.jar', path: 'app.jar'
+              s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'build/libs/demo.jar', path: 'app.jar'
               sh 'ls -ltr'
           }
       }
