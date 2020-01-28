@@ -16,7 +16,7 @@ pipeline {
               sh "pwd"
               sh "ls -ltr build/"
               sh "ls -ltr build/libs/"
-              s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'build/libs/demo.jar', path: 'app.jar'
+              s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'build/libs/demo-test.jar', path: 'app.jar'
               sh 'ls -ltr'
           }
       }
