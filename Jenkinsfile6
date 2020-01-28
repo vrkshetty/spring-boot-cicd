@@ -33,14 +33,6 @@ pipeline {
           command:
           - /busybox/cat
           tty: true
-          volumeMounts:
-            - name: docker-config1
-              mountPath: /kaniko/.docker/
-              volumes:
-        volumes:      
-        - name: docker-config
-          configMap:
-              name: docker-config
        """
        }
           }

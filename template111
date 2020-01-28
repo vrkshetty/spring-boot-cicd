@@ -1,24 +1,19 @@
 pipeline {
     environment {
       version = "${env.BUILD_NUMBER}"
-      filename = "app-${env.BUILD_NUMBER}.jar"
 
     }
     agent any
     stages {
-      stage ('Build '){
-
+      stage ('build & publish'){
       steps {
           withAWS(credentials: 'aws-credentials', region: 'eu-central-1') {
-              sh "chmod +x gradlew"
-              sh "./gradlew -Pversion=test build"
-              sh "ls -ltr build/libs/"
-              s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'build/libs/demo-test.jar', path: 'app.jar'
+              sh 'ls -ltr'
           }
       }
 
       }
-      stage ('Docker publish'){
+      stage ('Docker build'){
           agent {
           kubernetes {
             //cloud 'kubernetes'
@@ -33,14 +28,6 @@ pipeline {
           command:
           - /busybox/cat
           tty: true
-          volumeMounts:
-            - name: docker-config1
-              mountPath: /kaniko/.docker/
-              volumes:
-        volumes:      
-        - name: docker-config
-          configMap:
-              name: docker-config
        """
        }
           }
@@ -48,16 +35,11 @@ pipeline {
 
           steps {withAWS(credentials: 'aws-credentials', region: 'eu-central-1'){
           s3Download bucket: 'neo-airlines-artifact', file: 'app.jar', path: 'app.jar'
-          sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=neo-demo:latest'
+          sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/vrkshetty/neo-demo:latest'
 
 
           }
           }
-      }
-      stage ('Deploy') {
-      steps{
-      sh 'echo "deployed"'
-      }
       }
     }
 
