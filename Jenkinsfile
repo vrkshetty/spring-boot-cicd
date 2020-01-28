@@ -11,7 +11,7 @@ pipeline {
       steps {
           withAWS(credentials: 'aws-credentials', region: 'eu-central-1') {
               sh "chmod +x gradlew"
-              sh "./gradlew -Pversion=test build"
+              sh "./gradlew -Pversion= build"
               sh "ls -ltr"
               sh "pwd"
               sh "ls -ltr build/"
