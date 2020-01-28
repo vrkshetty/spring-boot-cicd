@@ -1,7 +1,7 @@
 pipeline {
     environment {
       version = "${env.BUILD_NUMBER}"
-      filename = app-${env.BUILD_NUMBER}.jar
+      filename = "app-${env.BUILD_NUMBER}.jar"
 
     }
     agent any
