@@ -40,7 +40,7 @@ spec:
     volumes:
     - name: docker-config
       configMap:
-          name: docker-config1
+          name: docker-config
        """
        }
           }
@@ -48,7 +48,7 @@ spec:
 
           steps {withAWS(credentials: 'aws-credentials', region: 'eu-central-1'){
           s3Download bucket: 'neo-airlines-artifact', file: 'app.jar', path: 'app.jar'
-          sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=neo-demo:latest'
+          sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd`  --cache=true --destination=neo-demo:latest'
 
 
           }
