@@ -40,7 +40,7 @@ pipeline {
 
           steps {withAWS(credentials: 'aws-credentials', region: 'eu-central-1'){
           s3Download bucket: 'neo-airlines-artifact', file: 'app.jar', path: 'app.jar'
-          sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=https://hub.docker.com/repository/docker/vrkshetty/neo-demo'
+          sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/vrkshetty/neo-demo:latest'
 
 
           }
