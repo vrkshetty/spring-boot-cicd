@@ -11,13 +11,8 @@ pipeline {
       steps {
           withAWS(credentials: 'aws-credentials', region: 'eu-central-1') {
               sh "chmod +x gradlew"
-              sh "./gradlew -Pversion= build"
-              sh "ls -ltr"
-              sh "pwd"
-              sh "ls -ltr build/"
-              sh "ls -ltr build/libs/"
+              sh "./gradlew -Pversion= test build"
               s3Upload acl: 'Private', bucket: 'neo-airlines-artifact', file: 'build/libs/demo-test.jar', path: 'app.jar'
-              sh 'ls -ltr'
           }
       }
 
